@@ -1,1 +1,1 @@
-module http
+module github.com/wustenberg/http
