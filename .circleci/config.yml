@@ -1,0 +1,46 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:latest
+    environment:
+      TEST_RESULTS: /tmp/test-results
+    steps:
+      - run:
+          name: Get go-junit-report
+          command: go get github.com/jstemmer/go-junit-report
+      - run:
+          name: Get gometalinter
+          command: go get github.com/alecthomas/gometalinter && gometalinter --install
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-pkg-cache
+      - run:
+          name: Get dependencies
+          command: go get -v -d ./...
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p $TEST_RESULTS
+            trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
+            go test -v -coverprofile=${TEST_RESULTS}/cover.out ./... | tee ${TEST_RESULTS}/go-test.out
+      - save_cache:
+          key: v1-pkg-cache
+          paths:
+            - "/go/pkg/mod"
+      - run:
+          name: Run coverage
+          command: |
+            go tool cover -html=$TEST_RESULTS/cover.out -o $TEST_RESULTS/cover.html
+      - run:
+          name: Run linting
+          command: gometalinter --deadline=120s --disable=vetshadow ./...
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results/cover.html
+          destination: cover.html
