@@ -15,10 +15,8 @@ func TestTimeout(t *testing.T) {
 
 		h := middleware.Add(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
-			select {
-			case <-ctx.Done():
-				cancelled <- true
-			}
+			<-ctx.Done()
+			cancelled <- true
 		}), middleware.Timeout(100 * time.Millisecond))
 
 		go func() {
