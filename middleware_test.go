@@ -1,4 +1,4 @@
-package middleware_test
+package http_middleware_test
 
 import (
 	"io"
@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"middleware"
+	middleware "http_middleware"
 )
 
 func TestAdd(t *testing.T) {

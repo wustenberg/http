@@ -1,4 +1,4 @@
-package middleware_test
+package http_middleware_test
 
 import (
 	"net/http"
@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"middleware"
+	middleware "http_middleware"
 )
 
 func TestSlowdown(t *testing.T) {
