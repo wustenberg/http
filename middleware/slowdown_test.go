@@ -24,7 +24,7 @@ func TestSlowdown(t *testing.T) {
 		select {
 		case <-done:
 			t.Fatal("received done too soon")
-		case <-time.After(500 * time.Millisecond):
+		case <-time.After(100 * time.Millisecond):
 			// Do nothing
 		}
 	})
