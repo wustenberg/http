@@ -51,9 +51,8 @@ func TestAdd(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if "ponyhat" != string(body) {
+		if string(body) != "ponyhat" {
 			t.Fatal("got unexpected body", string(body))
 		}
 	})
 }
-
