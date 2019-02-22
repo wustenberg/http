@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"middleware"
+	"http/middleware"
 )
 
 func TestSlowdown(t *testing.T) {

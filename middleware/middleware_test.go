@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"middleware"
+	"http/middleware"
 )
 
 func TestAdd(t *testing.T) {

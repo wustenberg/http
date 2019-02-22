@@ -1,4 +1,4 @@
-# http-middleware
+# http
 
 Useful idiomatic HTTP middleware compatible with `net/http`.
 
